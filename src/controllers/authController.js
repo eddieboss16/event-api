@@ -1,5 +1,6 @@
 const User = require('../models/userModel');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
 const { sendEmail } = require('../services/emailService');
 
 const register = async (req, res) => {
@@ -69,7 +70,7 @@ const resetPassword = async (req, res) => {
   
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(password, 10);//bcrypt here
     await db.execute('UPDATE users SET password = ? WHERE id = ?', [hashedPassword, decoded.id]);
     res.json({ message: 'Password reset successful' });
   } catch (error) {

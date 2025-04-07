@@ -1,5 +1,6 @@
 const Event = require('../models/eventModel');
 
+// Get all events (public)
 const getEvents = async (req, res) => {
   try {
     const events = await Event.findAll();
@@ -9,6 +10,7 @@ const getEvents = async (req, res) => {
   }
 };
 
+// Create an event (admin only)
 const createEvent = async (req, res) => {
   const eventData = { ...req.body, created_by: req.user.id };
   
@@ -20,6 +22,7 @@ const createEvent = async (req, res) => {
   }
 };
 
+// Update an event (admin only)
 const updateEvent = async (req, res) => {
   try {
     const updated = await Event.update(req.params.id, req.body);
@@ -30,6 +33,7 @@ const updateEvent = async (req, res) => {
   }
 };
 
+// Delete an event (admin only)
 const deleteEvent = async (req, res) => {
   try {
     const deleted = await Event.delete(req.params.id);
